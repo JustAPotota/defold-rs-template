@@ -1,3 +1,5 @@
+const MODULE_NAME: &str = "myextension";
+
 // Import Defold's SDK
 use dmsdk::*;
 
@@ -28,7 +30,7 @@ fn lua_init(l: lua::State) {
         let top = lua::get_top(l);
 
         // Register our new module
-        lua::register(l, "myextension", EXTENSION_FUNCTIONS);
+        lua::register(l, MODULE_NAME, EXTENSION_FUNCTIONS);
 
         lua::pop(l, 1);
         assert_eq!(top, lua::get_top(l));
