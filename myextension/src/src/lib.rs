@@ -43,29 +43,29 @@ fn lua_init(l: lua::State) {
 // We're putting an underscore before `params` here to tell Rust that we're not using it.
 // If we don't, the compiler will warn about unused variables.
 fn app_init(_params: dmextension::AppParams) -> dmextension::Result {
-    dmlog::info("MYEXTENSION", "app_init");
+    dmsdk::info!("app_init");
     dmextension::Result::Ok
 }
 
 fn app_final(_params: dmextension::AppParams) -> dmextension::Result {
-    dmlog::info("MYEXTENSION", "app_final");
+    dmsdk::info!("app_final");
     dmextension::Result::Ok
 }
 
 fn ext_init(params: dmextension::Params) -> dmextension::Result {
     let lua_state = params.l;
     lua_init(lua_state);
-    dmlog::info("MYEXTENSION", "Registered my extension");
+    dmsdk::info!("Registered my extension");
     dmextension::Result::Ok
 }
 
 fn ext_final(_params: dmextension::Params) -> dmextension::Result {
-    dmlog::info("MYEXTENSION", "ext_final");
+    dmsdk::info!("ext_final");
     dmextension::Result::Ok
 }
 
 fn on_update(_params: dmextension::Params) -> dmextension::Result {
-    dmlog::info("MYEXTENSION", "on_update");
+    dmsdk::info!("on_update");
     dmextension::Result::Ok
 }
 
@@ -73,11 +73,11 @@ fn on_event(_params: dmextension::Params, event: dmextension::Event) {
     match event {
         // Since we put `use dmextension::Event;` at the beginning,
         // we only need to write `Event::ActivateApp` instead of `dmextension::Event::ActivateApp`
-        Event::ActivateApp => dmlog::info("MYEXTENSION", "App activated!"),
-        Event::DeactivateApp => dmlog::info("MYEXTENSION", "App deactivated!"),
-        Event::IconifyApp => dmlog::info("MYEXTENSION", "App iconified!"),
-        Event::DeiconifyApp => dmlog::info("MYEXTENSION", "App deiconified!"),
-        Event::Unknown => dmlog::warning("MYEXTENSION", "Received unknown event!"),
+        Event::ActivateApp => dmsdk::info!("App activated!"),
+        Event::DeactivateApp => dmsdk::info!("App deactivated!"),
+        Event::IconifyApp => dmsdk::info!("App iconified!"),
+        Event::DeiconifyApp => dmsdk::info!("App deiconified!"),
+        Event::Unknown => dmsdk::warning!("Received unknown event!"),
     };
 }
 

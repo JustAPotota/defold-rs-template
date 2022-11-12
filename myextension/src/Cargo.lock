@@ -120,7 +120,7 @@ dependencies = [
 [[package]]
 name = "dmsdk"
 version = "0.1.0"
-source = "git+https://github.com/JustAPotota/defold-rs#8e101a9438ddf6568b900226e1b1bc6ec5ff31ff"
+source = "git+https://github.com/JustAPotota/defold-rs#422673c0c954eda79db9fb8e94509b88326ce560"
 dependencies = [
  "ctor",
  "dmsdk_ffi",
@@ -131,7 +131,7 @@ dependencies = [
 [[package]]
 name = "dmsdk_ffi"
 version = "0.1.0"
-source = "git+https://github.com/JustAPotota/defold-rs#8e101a9438ddf6568b900226e1b1bc6ec5ff31ff"
+source = "git+https://github.com/JustAPotota/defold-rs#422673c0c954eda79db9fb8e94509b88326ce560"
 dependencies = [
  "bindgen",
  "glob",
