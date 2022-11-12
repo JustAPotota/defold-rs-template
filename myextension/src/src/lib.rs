@@ -3,7 +3,7 @@ const MODULE_NAME: &str = "myextension";
 // Import Defold's SDK
 use dmsdk::*;
 
-// Also import this enum so we can just type `Event` later instead of `dmextension::Event`
+// Also import this enum for later
 use dmextension::Event;
 
 // `#[no_mangle] extern "C"` is boilerplate to make sure Defold can run the function
@@ -71,6 +71,8 @@ fn on_update(_params: dmextension::Params) -> dmextension::Result {
 
 fn on_event(_params: dmextension::Params, event: dmextension::Event) {
     match event {
+        // Since we put `use dmextension::Event;` at the beginning,
+        // we only need to write `Event::ActivateApp` instead of `dmextension::Event::ActivateApp`
         Event::ActivateApp => dmlog::info("MYEXTENSION", "App activated!"),
         Event::DeactivateApp => dmlog::info("MYEXTENSION", "App deactivated!"),
         Event::IconifyApp => dmlog::info("MYEXTENSION", "App iconified!"),
