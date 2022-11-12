@@ -9,7 +9,7 @@ width = 960
 height = 640
 
 [project]
-title = defold-rs-template
+title = myextension
 
 [library]
 include_dirs = myextension
