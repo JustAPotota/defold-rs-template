@@ -1,14 +1,10 @@
-const MODULE_NAME: &str = "myextension";
-
 // Import Defold's SDK
 use dmsdk::*;
 
 // Also import this enum for later
 use dmextension::Event;
 
-// `#[no_mangle] extern "C"` is boilerplate to make sure Defold can run the function
-#[no_mangle]
-extern "C" fn reverse(l: lua::State) -> i32 {
+fn reverse(l: lua::State) -> i32 {
     // Grab the given string from the Lua stack
     // Note that most functions using `lua::State` are unsafe
     let to_reverse = unsafe { lua::check_string(l, 1) };
@@ -24,9 +20,17 @@ extern "C" fn reverse(l: lua::State) -> i32 {
     1
 }
 
-// This is an array of tuples where the first element is the function name,
-// and the second is the Rust function it refers to
-const EXTENSION_FUNCTIONS: lua::Reg = &[("reverse", reverse)];
+// This is the name of our module in Lua
+const MODULE_NAME: &str = "myextension";
+
+// This macro creates a constant named `EXTENSION_FUNCTIONS` that we can give to `lua::register()`
+// The functions in Lua will be named the same as in Rust, so our `reverse` function will become `myextension.reverse()`
+//
+// Adding more functions is easy:
+// declare_functions!(EXTENSION_FUNCTIONS, reverse, my_function, other_function);
+declare_functions!(EXTENSION_FUNCTIONS, reverse);
+
+// Tip: In VS Code, you can run the "Exapand macro recursively" command to see what the code looks like!
 
 fn lua_init(l: lua::State) {
     unsafe {
@@ -40,8 +44,8 @@ fn lua_init(l: lua::State) {
     }
 }
 
-// We're putting an underscore before `params` here to tell Rust that we're not using it.
-// If we don't, the compiler will warn about unused variables.
+// We're putting an underscore before `params` here to tell Rust that we're not using it
+// If we don't, the compiler will warn about unused variables
 fn app_init(_params: dmextension::AppParams) -> dmextension::Result {
     dmsdk::info!("app_init");
     dmextension::Result::Ok
@@ -81,11 +85,11 @@ fn on_event(_params: dmextension::Params, event: dmextension::Event) {
     };
 }
 
-// Defold's SDK uses a macro for setting up extension entry points:
+// Defold's SDK includes a macro for setting up extension entry points:
 //
 // declare_extension!(symbol, app_init, app_final, init, update, on_event, final)
 //
-// The symbol (`MY_EXTENSION` in this example) must match the name in `ext.manifest`.
+// The symbol (`MY_EXTENSION` in this case) must match the name in `ext.manifest`
 declare_extension!(
     MY_EXTENSION,
     Some(app_init),
