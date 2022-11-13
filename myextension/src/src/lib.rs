@@ -47,29 +47,29 @@ fn lua_init(l: lua::State) {
 // We're putting an underscore before `params` here to tell Rust that we're not using it
 // If we don't, the compiler will warn about unused variables
 fn app_init(_params: dmextension::AppParams) -> dmextension::Result {
-    dmsdk::info!("app_init");
+    dmlog::info!("app_init");
     dmextension::Result::Ok
 }
 
 fn app_final(_params: dmextension::AppParams) -> dmextension::Result {
-    dmsdk::info!("app_final");
+    dmlog::info!("app_final");
     dmextension::Result::Ok
 }
 
 fn ext_init(params: dmextension::Params) -> dmextension::Result {
     let lua_state = params.l;
     lua_init(lua_state);
-    dmsdk::info!("Registered my extension");
+    dmlog::info!("Registered my extension");
     dmextension::Result::Ok
 }
 
 fn ext_final(_params: dmextension::Params) -> dmextension::Result {
-    dmsdk::info!("ext_final");
+    dmlog::info!("ext_final");
     dmextension::Result::Ok
 }
 
 fn on_update(_params: dmextension::Params) -> dmextension::Result {
-    dmsdk::info!("on_update");
+    dmlog::info!("on_update");
     dmextension::Result::Ok
 }
 
@@ -77,11 +77,11 @@ fn on_event(_params: dmextension::Params, event: dmextension::Event) {
     match event {
         // Since we put `use dmextension::Event;` at the beginning,
         // we only need to write `Event::ActivateApp` instead of `dmextension::Event::ActivateApp`
-        Event::ActivateApp => dmsdk::info!("App activated!"),
-        Event::DeactivateApp => dmsdk::info!("App deactivated!"),
-        Event::IconifyApp => dmsdk::info!("App iconified!"),
-        Event::DeiconifyApp => dmsdk::info!("App deiconified!"),
-        Event::Unknown => dmsdk::warning!("Received unknown event!"),
+        Event::ActivateApp => dmlog::info!("App activated!"),
+        Event::DeactivateApp => dmlog::info!("App deactivated!"),
+        Event::IconifyApp => dmlog::info!("App iconified!"),
+        Event::DeiconifyApp => dmlog::info!("App deiconified!"),
+        Event::Unknown => dmlog::warning!("Received unknown event!"),
     };
 }
 
