@@ -6,16 +6,13 @@ use dmextension::Event;
 
 fn reverse(l: lua::State) -> i32 {
     // Grab the given string from the Lua stack
-    // Note that most functions using `lua::State` are unsafe
-    let to_reverse = unsafe { lua::check_string(l, 1) };
+    let to_reverse = lua::check_string(l, 1);
 
     // Reverse the string
     let reversed: String = to_reverse.chars().rev().collect();
 
     // Push the newly reversed string back onto the Lua stack
-    unsafe {
-        lua::push_string(l, &reversed);
-    }
+    lua::push_string(l, &reversed);
 
     1
 }
@@ -33,15 +30,13 @@ declare_functions!(EXTENSION_FUNCTIONS, reverse);
 // Tip: In VS Code, you can run the "Exapand macro recursively" command to see what the code looks like!
 
 fn lua_init(l: lua::State) {
-    unsafe {
-        let top = lua::get_top(l);
+    let top = lua::get_top(l);
 
-        // Register our new module
-        lua::register(l, MODULE_NAME, EXTENSION_FUNCTIONS);
+    // Register our new module
+    lua::register(l, MODULE_NAME, EXTENSION_FUNCTIONS);
 
-        lua::pop(l, 1);
-        assert_eq!(top, lua::get_top(l));
-    }
+    lua::pop(l, 1);
+    assert_eq!(top, lua::get_top(l));
 }
 
 // We're putting an underscore before `params` here to tell Rust that we're not using it
